@@ -1,0 +1,41 @@
+mkdir images 				# create a image directory
+cd images
+mkdir nano				# created another directory called nano
+wget <paste url>			# copied a website url from tooplate.com website
+ls
+sudo apt install unzip -y 		# To unzip the .zip file
+ls
+unzip <filename>
+ls
+tar czvf nano.tar.gz*  			# to archive 
+ls
+mv nano.tar.gz ../
+ls
+cd ..
+ls
+rm -rf <file name> <file name.zip>
+ls
+mv nano.tar.gz nano/			# move the artifact into nano dir
+cd nano/
+ls
+
+# after writing Dockerfile
+
+docker build -t nanoimage
+docker images
+
+# now time to test
+
+docker run -d --name nanowebsite -p 9080:80 nanoimage
+
+#copy docker-engine IP & paste it on browser:9080
+
+
+
+
+
+
+
+
+
+
