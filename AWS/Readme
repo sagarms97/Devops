@@ -34,7 +34,7 @@
 - Managing infrastructure is easier
 - we can **automation** each & every step & process to avoid **human errors** & save **our time**.
 
-![[Pasted image 20230818184952.png]]
+
 ### AWS Services
 - EC2 Instances (Elastic compute cloud)
 	- Vm for Tomcat, RabbitMQ, Memcached, mysql..
