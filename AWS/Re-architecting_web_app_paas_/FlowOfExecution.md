@@ -31,7 +31,7 @@ Vprofile-bean-key
 	- Save
 
 #### Now Create Backend Services
-##### RDS Services
+### RDS Services
 - Subnet groups -> create DB subnet group
 	- name : vprofile-rds -sub-grp
 	- desc : vprofile-rds-sub-grp
@@ -63,7 +63,9 @@ Vprofile-bean-key
 	- **create DB**
 	- copy & paste the credentials on notepad
 
-##### Elastic Cache Service
+   
+
+### Elastic Cache Service
 - Parameter -> Create
 	- name : vprofile-memcache-para-grp
 	- families : memcached 1.4
@@ -87,8 +89,9 @@ Vprofile-bean-key
 	- **choose**
 	- Next
 	- **create**
+ 
 
-##### Amazon-MQ service
+### Amazon-MQ service
 - Rabbit -> single broker  -> next
 	- name : vprofile-rmq
 	- instance type : mq.t3.micro
@@ -104,10 +107,10 @@ Vprofile-bean-key
 
 **One last thing left in backend that is DB Initializing.**
 - we need to login RDS instance or mysql login create database & deploy our schema
-
 -> Go-to RDS service and copy its endpoints & paste it to notepad
 
-##### Create EC2 instance (temporary)
+
+### Create EC2 instance (temporary)
 - Launch instance
 	- name : mysql-client
 	- OS : ubuntu-server 22
@@ -175,7 +178,7 @@ exit
 
 
 #### Now Frontend Services
-##### Elastic Beanstalk Service
+### Elastic Beanstalk Service
 - its a Platform service PAAS
 - its a ready made platform you can just upload your artifact here
 - It creates EC2 instances, load balancers.
@@ -253,7 +256,7 @@ exit
 	- (it always connect same EC2 instance)
 	- **save and apply**
 
-#### Build & deploy (from source code)
+### Build & deploy (from source code)
 
 Git
 ```bash
@@ -311,7 +314,7 @@ https://vprofile.sagarsarawari.com
 
 
 
-#### Cloud Front Service
+### Cloud Front Service
 Its content delivery network
 - create cloud 
 	- origin : vprofile.sagarsarawi.com , match viewer
