@@ -16,3 +16,16 @@
 - No upfront cost
 - IAAS
 - PAAS & SAAS
+
+
+#### Comparisons of LiftAndShit & Re-architecting projects 
+
+**New Project                                                              Previous project**
+- Bean stalk                                                              Tomcat   EC2 / vm
+- ELB in Bean stalk                                                       Nginx lb / ELB
+- Autoscaling                                                             Autoscaling
+- EFS / S3                                                                EFS / S3
+- RDS                                                                     Mysql EC2/ vm
+- Elastic Cache                                                           memcached EC2 / vm
+- Active MQ                                                               RabbitMq EC2 / vm
+- Route53                                                                 Godaddy
