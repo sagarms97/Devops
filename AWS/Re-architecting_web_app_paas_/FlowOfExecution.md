@@ -171,22 +171,11 @@ exit
 
 ```
 
->[!note] paste on notes
->RDS instance -> copy the end-point & its port 3306
->Amazon-MQ instance -> copy the end-point & its port 5671   
->Elastic-Cache instance -> copy the end-point & its port 11211
+
 
 
 #### Now Frontend Services
 ### Elastic Beanstalk Service
-- its a Platform service PAAS
-- its a ready made platform you can just upload your artifact here
-- It creates EC2 instances, load balancers.
-- It stores the artifacts to s3 buckets.
-- It manages the security groups, key-pairs, & all other things that we generally require to host a web application on EC2
-- All those things it manages together as a suit.
-- Behind the scene it will take care of load balancer, EC2 instance, artifacts
-
 - **Create I am role**
 	- Aws standard
 	- EC2 instance  ->  Next
