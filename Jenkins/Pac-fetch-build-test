@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    tools {
+        maven "maven3"
+        jdk "oracle openjdk8"
+    }
+    stages {
+        stage("Fetch Code") {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: 'vp-rem']], userRemoteConfigs: [[url: 'https://github.com/devopshydclub/vprofile-project.git']]])
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn install -DskipTests'
+            }
+            post {
+                success { 
+                    echo 'Now archiving it...'
+                    archiveArtifacts artifacts: '**/*.war'
+                }
+            }
+        }
+        stage('UNIT TEST') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
