@@ -1,0 +1,76 @@
+pipeline {
+    agent any
+    tools {
+        maven "maven3"
+        jdk "oracle openjdk8"
+    }
+    stages {
+        stage("Fetch Code") {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: 'vp-rem']], userRemoteConfigs: [[url: 'https://github.com/devopshydclub/vprofile-project.git']]])
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn install -DskipTests'
+            }
+            post {
+                success { 
+                    echo 'Now archiving it...'
+                    archiveArtifacts artifacts: '**/*.war'
+                }
+            }
+        }
+        stage('UNIT TEST') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Checkstyle Analysis'){
+            steps{
+                sh 'mvn checkstyle:checkstyle'
+            }
+        }
+        stage('sonar Analysis'){
+            environment{
+                scannerHome = tool 'sonar4.7'
+            }
+            steps{
+                withSonarQubeEnv('sonar') {           
+                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                    -Dsonar.projectName=vprofile-repo \
+                    -Dsonar.projectVersion=1.0 \
+                    -Dsonar.Sources=src/ \
+                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                    -Dsonar.junit.reportPath=target/surefire-reports/ \
+                    -Dsonar.jacoco.reportPath=target/jacoco.exec \
+                    -Dsonar.java.chekStyle.reportPaths=target/checkStyel-result.xml
+                    '''
+                 }
+            }
+        }
+        stage("Quality Gates"){
+            steps{
+                timeout(time: 1, unit: 'HOURS'){
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }  
+        stage("UploadArtifact"){
+            steps{
+                nexusArtifactUploader(
+                    nexusVersion:'nexus3', 
+                    protocol:'http',
+                    nexusUrl:'172.31.52.191:8081',
+                    groupId:'QA',
+                    version:"${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+                    repository:'vprofile-repo', 
+                    credentialsId:'NexusLogin',
+                    artifacts:[
+                        [artifactId:'vproapp', classifier:'', file:'target/vprofile-v2.war', type:'war']
+                    ]
+                )
+            }
+        }
+    }
+}
