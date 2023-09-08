@@ -1,0 +1,26 @@
+#containerizing the Web Apllication
+# login to docker engine
+
+mkdir images
+cd images/
+mkdir nano
+wget https://www.tooplate.com/zip-templates/2136_kool_form_pack.zip                   # copy url from tooplate.com website
+ls
+sudo apt install unzip                                                                # for unziping the website
+unzip 2136_kool_form_pack.zip                                                         # website file name
+ls
+cd 2136_kool_form_pack
+ls
+tar czvf nano.tar.gz *                                                                # we archive in the current working directory
+ls
+mv nano.tar.gz ../
+ls
+cd ..
+ls
+rm -rf 2136_kool_form_pack 2136_kool_form_pack.zip
+ls
+mv nano.tar.gz nano/                                                                  # move this artifact to nano directory
+cd nano/
+ls
+
+#lets write Dockerfile
