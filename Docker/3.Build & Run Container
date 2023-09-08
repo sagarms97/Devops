@@ -13,3 +13,10 @@ docker ps -a
 
 <ip address>:9080
 Booooooom.... successssss
+
+
+# Push our image to Docker Hub
+docker login
+# enter your user name and password
+docker push sagarms97/nanoimg:v2
+# done
