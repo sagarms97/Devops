@@ -1,0 +1,15 @@
+
+docker buildx build -t nanoimage                                       # build success
+docker images                                                 
+
+#now its test time
+
+docker run -d --name nanowebsite -p 9080:80 nanoimages
+docker ps
+docker ps -a
+
+# Check it from Browser
+# Copy docker-engine ip from EC2 instance
+
+<ip address>:9080
+Booooooom.... successssss
