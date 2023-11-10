@@ -1,0 +1,19 @@
+---
+- name: understanding vars precedence
+  hosts: all
+  become: yes
+  vars:
+    #User: playuser
+      #Comm: it is a varible from playbook
+  tasks:
+    - name: create a user
+      ansible.builtin.user:
+        name: "{{User}}"
+        comment: "{{Comm}}"
+      register: USROUT
+    - name: debugging mode
+      debug:
+        var: USROUT.name
+    - debug:
+        var: USROUT.comment      
+

@@ -1,0 +1,4 @@
+# variables accessiable by websrvgrp hosts
+User: webserver
+Comm: variable from group_vars/websrvgrp file
+

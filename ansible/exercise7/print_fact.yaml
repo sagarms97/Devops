@@ -1,0 +1,15 @@
+---
+- name: Learning fetch variables
+  hosts: all
+  become: yes
+  tasks:
+    - name: print OS name
+      debug:
+        var: ansible_distribution
+    - name: print memory details
+      debug:
+        var: ansible_memory_mb.real.free
+    - name: print processor name
+      debug:
+        var: ansible_processor[2]
+

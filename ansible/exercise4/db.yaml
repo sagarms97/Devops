@@ -1,0 +1,39 @@
+---
+- name: setup db server
+  hosts: dbsrvgrp
+  become: yes
+  vars:
+    dbname: groups
+    dbuser: devops
+    dbpass: admin123
+  tasks:
+    - debug:
+        var: dbname
+    - debug:
+        msg: "value of db user is {{dbuser}}"  
+    - name: Install MySQL
+      yum:
+        name: mariadb-server
+        state: latest
+    - name: Start & Enable the MySQL service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+    - name: Install python 
+      yum:
+        name: python3-PyMySQL
+        state: present
+    - name: create new database with name "accounts"
+      mysql_db:
+        name: accounts
+        state: present
+    - name: Create database user name "admin"
+      mysql_user:
+        name: "{{dbuser}}"
+        password: "{{dbpass}}"
+        priv: '*.*:ALL,GRANT'
+        state: present
+
+
+

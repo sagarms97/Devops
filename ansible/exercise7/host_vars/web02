@@ -1,0 +1,4 @@
+#variable accessible by web02 host
+User: web02user
+Comm: variable from host_vars/web02 file
+
