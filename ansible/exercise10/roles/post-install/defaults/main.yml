@@ -1,0 +1,14 @@
+---
+# defaults file for post-install
+
+username:
+  - all1
+  - all2
+
+ntp0: 0.north-america.pool.ntp.org
+ntp1: 1.north-america.pool.ntp.org
+ntp2: 2.north-america.pool.ntp.org
+ntp3: 3.north-america.pool.ntp.org
+
+ntp_path_centos: /etc/chrony.conf
+ntp_path_ubuntu: /etc/chrony/chrony.conf  

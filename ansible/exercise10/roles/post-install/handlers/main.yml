@@ -1,0 +1,16 @@
+---
+# handlers file for post-install
+
+  - name: Restart the CHRONYD service on Centos
+    ansible.builtin.service:
+      name: chronyd
+      state: restarted
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Restart the CHRONYD service on Ubuntu
+    ansible.builtin.service:
+      name: chronyd
+      state: restarted
+      enabled: yes
+    when: ansible_distribution == "Ubuntu"

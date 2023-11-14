@@ -1,0 +1,87 @@
+---
+# tasks file for post-install
+
+    - name: Installing packages on centos
+      ansible.builtin.yum:
+        name: "{{item}}"
+        state: present
+      when: ansible_distribution == "CentOS"
+      loop:
+        - wget
+        - zip
+        - unzip
+        - git
+        - chrony
+
+    - name: Installing packages on Ubuntu
+      ansible.builtin.apt:
+        name: "{{item}}"
+        state: present
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - wget
+        - zip
+        - unzip
+        - git
+        - chrony
+
+    - name: start the CHRONYD service on Centos 
+      ansible.builtin.service:
+        name: chronyd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: start the CHRONYD service on Ubuntu
+      ansible.builtin.service:
+        name: chronyd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "Ubuntu"      
+  
+    - name: Create a DevOps Group
+      ansible.builtin.group:
+        name: devops
+        state: present
+
+    - name: add users
+      ansible.builtin.user:
+        name: "{{item}}"
+        state: present
+        group: devops
+      loop: "{{username}}"
+    
+    - name: Banner file /etc/motd
+      copy:
+        content: "This {{ansible_distribution}} is managed by ansible. \n"
+        dest: /etc/motd    
+
+    - name: Deploy ntp conf on centos
+      template:
+        src: ntpconf_centos
+        dest: "{{ntp_path_centos}}"
+        backup: yes
+      when: ansible_distribution == "CentOS"
+      notify: Restart the CHRONYD service on Centos
+
+    - name: Deploy ntp cong on ubuntu
+      template:
+        src: ntpconf_ubuntu
+        dest: "{{ntp_path_ubuntu}}"
+        backup: yes
+      when: ansible_distribution == "Ubuntu"
+      notify: Restart the CHRONYD service on Ubuntu
+
+    - name: create a directory in remote machines
+      file:
+        path: /opt/devdata
+        state: directory
+        mode: "0644"
+
+    - name: Deploy dev data file
+      copy:
+        src: dev.txt
+        dest: /opt/devdata/dev.txt
+
+
+
