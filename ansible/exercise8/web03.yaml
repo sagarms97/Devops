@@ -1,0 +1,9 @@
+---
+- name: create a directory on web03
+  hosts: web03
+  become: yes
+  tasks:
+    - name: create a DIR
+      shell: mkdir -p web03
+    - name : create a file within a DIR
+      shell: touch web03/sagar1.sh

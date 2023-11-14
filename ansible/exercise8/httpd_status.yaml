@@ -1,0 +1,31 @@
+---
+- name: Check HTTPD status on a remote host
+  hosts: websrvgrp
+  become: yes
+  tasks:
+    - name: print OS
+      debug:
+        var: ansible_distribution
+
+    - name: Get HTTPD status
+      shell: systemctl status httpd
+      register: httpd_status
+      ignore_errors: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: Display HTTPD status
+      debug:
+        var: httpd_status.stdout_lines[2]
+      when: ansible_distribution == "CentOS"    
+
+    - name: Gett APACHE2 status
+      shell: systemctl status apache2
+      register: apache2_status
+      ignore_errors: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Display APACHE2 status
+      debug:
+        var: apache2_status.stdout_lines[2]
+      when: ansible_distribution == "Ubuntu"
+

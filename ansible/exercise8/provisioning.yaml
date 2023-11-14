@@ -1,0 +1,40 @@
+---
+- name: Installing Packages on Centos
+  hosts: all
+  become: yes
+  tasks:
+    - name: Installing packages
+      ansible.builtin.yum:
+        name: "{{item}}"
+        state: present
+      when: ansible_distribution == "CentOS"
+      loop:
+        - wget
+        - zip
+        - unzip
+        - git
+
+    - name: Installing packages on Ubuntu
+      ansible.builtin.apt:
+        name: "{{item}}"
+        state: present
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - wget
+        - zip
+        - unzip
+        - git
+  
+    - name: Create a DevOps Group
+      ansible.builtin.group:
+        name: devops
+        state: present
+
+    - name: add users
+      ansible.builtin.user:
+        name: "{{item}}"
+        state: present
+        group: devops
+      loop: "{{username}}"
+        
+
